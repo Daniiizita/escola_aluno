@@ -1,0 +1,32 @@
+import csv
+
+# Cria um dicionário para armazenar os dados dos alunos
+alunos = {}
+
+# Lê os dados da tabela do Word
+with open("lista_alunos_1_a_5.docx", "r") as f:
+    for linha in f:
+        # Obtém os dados da linha
+        dados = linha.split(" ")
+        id = int(dados[0])
+        data_nascimento = dados[1]
+        nome_aluno = dados[2]
+        situacao = dados[3]
+
+        # Adiciona os dados ao dicionário
+        alunos[id] = {
+            "data_nascimento": data_nascimento,
+            "nome_aluno": nome_aluno,
+            "situacao": situacao,
+        }
+
+# Abre o arquivo CSV para gravação
+with open("alunos.csv", "w") as f:
+    writer = csv.writer(f)
+
+    # Escreve os cabeçalhos do arquivo
+    writer.writerow(["ID", "Data de Nascimento", "Nome do Aluno", "Situação"])
+
+    # Escreve os dados dos alunos
+    for id, aluno in alunos.items():
+        writer.writerow([id, aluno["data_nascimento"], aluno["nome_aluno"], aluno["situacao"]])
